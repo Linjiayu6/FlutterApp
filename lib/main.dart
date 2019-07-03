@@ -1,22 +1,23 @@
 
 import 'package:flutter/material.dart';
 
-import 'pages/home.dart';
+import 'pages/index.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MainApp());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Lin.JY APP',
+
       theme: ThemeData(
         brightness: Brightness.light,
-        primaryColor: Colors.green[600],
+        primaryColor: Colors.green,
       ),
+
       home: Center(
-        child: Home(),
+        child: Index(),
       )
     );
   }

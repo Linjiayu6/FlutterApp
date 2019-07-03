@@ -5,17 +5,21 @@
 
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
+import 'chats.dart';
+
+class Index extends StatefulWidget {
   @override
-  HomeState createState () => HomeState();
+  IndexState createState () => IndexState();
 }
 
-class HomeState extends State<Home> {
+class IndexState extends State<Index> {
+  // final List<String> textList = ['Chats', 'Contacts', 'Discover', 'Me'];
 
+  // TODO: How to optimize them?????
   final List<BottomNavigationBarItem> bottomNavigationBarList = [
     new BottomNavigationBarItem(
       icon: new Icon(Icons.chat,color: Colors.grey),
-      title: new Text("Chats"),
+      title: new Text('Chats'),
     ),
     new BottomNavigationBarItem(
       icon: new Icon(Icons.perm_contact_calendar,color: Colors.grey),
@@ -33,6 +37,11 @@ class HomeState extends State<Home> {
 
   // !!! 状态数据不要写到build里面
   int _currentIndex = 0;
+  void _onChange(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +52,21 @@ class HomeState extends State<Home> {
         title: new Text('WeChat'),
         // 右边的icon
         actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.list), onPressed: null),
+          new IconButton(
+            icon: new Icon(Icons.add_circle_outline), 
+            onPressed: () {
+              print('Trigger icon on the right');
+            },
+          ),
         ],
       ),
 
 
       // 底部的导航button
       bottomNavigationBar: BottomNavigationBar(
-        items: bottomNavigationBarList,
         // Required
         type: BottomNavigationBarType.fixed,
+        items: bottomNavigationBarList,
         onTap: (int index) {
           setState(() {
             _currentIndex = index;
@@ -63,7 +77,10 @@ class HomeState extends State<Home> {
       ),
 
       body: Center(
-        child: Text(_currentIndex.toString())
+        // child: Text(_currentIndex.toString())
+        child: Chats(
+          parentsProps: _currentIndex.toString(),
+        ),
       )
     );
   }
