@@ -25,7 +25,38 @@ class ChatsState extends State<Chats> {
   Widget build(BuildContext context) {
     return Center(
       // child: Text(widget.parentsProps)
-      child: Text('Chats Widget')
+      // child: Text('Chats Widget')
+      child: FriendList()
+    );
+  }
+}
+
+class FriendList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _buildBody(),
+    );
+  }
+
+  // 列表内容 例子借鉴 https://juejin.im/post/5b596c89e51d4519945ffb66
+  // https://juejin.im/post/5c88d6c4f265da2de970bc24
+  ListView _buildBody () {
+    return ListView(
+      children: <Widget>[
+        new ListTile(
+          title: Text('林佳钰1'),
+          subtitle: Text('2 aaaaaaa 说什么呢 您呢 aaaaaaa 说什么呢'),
+          trailing: Text('2019.10.11'),
+          leading: FlutterLogo(size: 56.0),
+        ),
+        new ListTile(
+          title: Text('林佳钰2'),
+          subtitle: Text('2 aaaaaaa 说什么呢 您呢 aaaaaaa 说什么呢'),
+          trailing: Text('2019.10.01'),
+          leading: FlutterLogo(size: 56.0),
+        ),
+      ]
     );
   }
 }
