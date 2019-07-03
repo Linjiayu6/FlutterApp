@@ -6,6 +6,9 @@
 import 'package:flutter/material.dart';
 
 import 'chats.dart';
+import 'contacts.dart';
+import 'me.dart';
+import 'discover.dart';
 
 class Index extends StatefulWidget {
   @override
@@ -37,11 +40,13 @@ class IndexState extends State<Index> {
 
   // !!! 状态数据不要写到build里面
   int _currentIndex = 0;
-  void _onChange(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
+
+  final List<StatefulWidget> widgetList = [
+    new Chats(),
+    new Contacts(),
+    new Discover(),
+    new Me()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +83,10 @@ class IndexState extends State<Index> {
 
       body: Center(
         // child: Text(_currentIndex.toString())
-        child: Chats(
-          parentsProps: _currentIndex.toString(),
-        ),
+        // child: Chats(
+        //   // parentsProps: _currentIndex.toString(),
+        // ),
+        child: widgetList[_currentIndex] 
       )
     );
   }
