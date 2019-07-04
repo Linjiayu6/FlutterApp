@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
 
       theme: ThemeData(
         brightness: Brightness.light,
-        primaryColor: Colors.green,
+        primaryColor: Colors.grey[300],
       ),
 
       home: Center(

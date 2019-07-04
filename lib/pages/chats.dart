@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class Chats extends StatefulWidget {
   /**
@@ -21,42 +22,150 @@ class Chats extends StatefulWidget {
 }
 
 class ChatsState extends State<Chats> {
+  List friendList = [
+    'name', 'friend', 'friend', 'friend', 'friend'
+  ];
   @override
   Widget build(BuildContext context) {
     return Center(
       // child: Text(widget.parentsProps)
       // child: Text('Chats Widget')
-      child: FriendList()
+      child: Column(
+        children: [
+          Container(
+            height: 40.0,
+            color: Colors.grey[200],
+            alignment: Alignment(0.0, 0.0),
+            child: Text('Logged in to Wechat for Mac.')
+          ),
+          
+          Expanded(
+            child: _FriendList(friendList: friendList),
+          )
+        ]
+      )
     );
   }
 }
 
-class FriendList extends StatelessWidget {
+class _FriendList extends StatelessWidget {
+  // 无状态组件信息, 从父组件传入
+  List friendList;
+  _FriendList({Key key, this.friendList}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(),
+      body: Center(
+        child: _buildBody(friendList),
+      )
     );
   }
 
-  // 列表内容 例子借鉴 https://juejin.im/post/5b596c89e51d4519945ffb66
-  // https://juejin.im/post/5c88d6c4f265da2de970bc24
-  ListView _buildBody () {
-    return ListView(
+  /**
+   * 列表循环输出内容 例子https://juejin.im/post/5b596c89e51d4519945ffb66
+   */
+  _buildBody(friendList) {
+    // 当没有获取到内容的时候, 菊花转
+    // if (friendList.length == 0) {
+    //   return Container(child: CupertinoActivityIndicator());
+    // }
+
+    return ListView.builder(
+      itemCount: friendList.length,
+      itemBuilder: (BuildContext context, int index) {
+        return getItem(friendList[index]);
+      },
+    );
+  }
+  
+  getItem(item) => Container(
+    // margin: EdgeInsets.only(bottom: 1.0),
+    child: Container(
+      margin: EdgeInsets.only(left: 15.0, right: 0.0, top: 15.0),
+      child: Row(
+        children: <Widget>[ _leftAvatar(), _rightContent() ],
+      )
+    )
+  );
+
+  Widget _leftAvatar() {
+    return ClipRRect(
+      borderRadius: BorderRadius.only( topLeft: Radius.circular(4), topRight: Radius.circular(4) ),
+      child: Image.network(
+        // subject['images']['large'],
+        'http://img2.woyaogexing.com/2018/12/22/f080f9c6ac884075ab7e0ddeff56b192!400x400.jpeg',
+        width: 46.0, 
+        height: 46.0,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Widget _rightContent() {
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.only(left: 10.0),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              style: BorderStyle.solid,
+              color: Colors.grey[200],
+              width: 1.0
+            )
+          ),
+        ),
+        height: 50.0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            // 左边是用户名称, 右边是时间描述
+            _rightContent_top(),
+            // 聊天描述
+            _rightContent_bottom(),
+          ]
+        )
+      )
+    );
+  }
+
+  Widget _rightContent_top() {
+    return Stack (
       children: <Widget>[
-        new ListTile(
-          title: Text('林佳钰1'),
-          subtitle: Text('2 aaaaaaa 说什么呢 您呢 aaaaaaa 说什么呢'),
-          trailing: Text('2019.10.11'),
-          leading: FlutterLogo(size: 56.0),
+        Container(
+          height: 25.0,
+          padding: EdgeInsets.only(top: 3.0, bottom: 4.0, right: 100.0),
+          child: Text(
+            // subject['title'],
+            'subjectsubjectsubjectsubjectsubjectsubjectsubjectsubjectsubjectsubject',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
-        new ListTile(
-          title: Text('林佳钰2'),
-          subtitle: Text('2 aaaaaaa 说什么呢 您呢 aaaaaaa 说什么呢'),
-          trailing: Text('2019.10.01'),
-          leading: FlutterLogo(size: 56.0),
+
+        Positioned(
+          child: Text(
+            '2019.05.25',
+            style: TextStyle(fontSize: 10.0, color: Colors.grey[600]),
+          ),
+          top: 5.0,
+          right: 20.0,
         ),
-      ]
+
+      ],
+    );
+  }
+
+  Widget _rightContent_bottom() {
+    return Container(
+      padding: EdgeInsets.only(right: 20.0),
+      child: Text(
+        '今天的饭菜是什么今天的饭菜是什么今天的饭菜是什么今天的饭菜是什么今天的饭菜是什么',
+        style: TextStyle(fontSize: 10.0, color: Colors.grey[600]),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      )
     );
   }
 }
