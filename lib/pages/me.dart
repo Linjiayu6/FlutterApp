@@ -10,8 +10,13 @@ class Me extends StatefulWidget {
 class MeState extends State<Me> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Me Widget')
+    return GestureDetector(
+      onTap: () { 
+        Navigator.pushNamed(context, '/chats/detail');
+      },
+      child: Center(
+        child: Text('Me Widget')
+      )
     );
   }
 }

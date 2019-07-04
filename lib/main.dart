@@ -2,8 +2,11 @@
 import 'package:flutter/material.dart';
 
 import 'pages/index.dart';
+import 'pages/chatsDetail.dart';
 
-void main() => runApp(MainApp());
+void main() {
+  runApp(MainApp());
+}
 
 class MainApp extends StatelessWidget {
   @override
@@ -18,7 +21,11 @@ class MainApp extends StatelessWidget {
 
       home: Center(
         child: Index(),
-      )
+      ),
+
+      routes: <String, WidgetBuilder> {
+        '/chats/detail': (_) => ChatsDetail(),
+      }
     );
   }
 }
