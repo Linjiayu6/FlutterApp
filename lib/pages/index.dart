@@ -26,7 +26,11 @@ class IndexState extends State<Index> {
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.room,color: Colors.grey),
-      title: Text("Instagram"),
+      title: Text("Contacts"),
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.room,color: Colors.grey),
+      title: Text("Discover"),
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.perm_identity,color: Colors.grey),

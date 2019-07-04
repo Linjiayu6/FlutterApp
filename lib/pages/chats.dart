@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../models/friendList_model.dart';
+
 class Chats extends StatefulWidget {
   /**
    * 这里类似React this.props.xxx 说明是从上级或者父组件传过来的
@@ -22,9 +24,7 @@ class Chats extends StatefulWidget {
 }
 
 class ChatsState extends State<Chats> {
-  List friendList = [
-    'name', 'friend', 'friend', 'friend', 'friend'
-  ];
+  List friendList = friendListData;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -84,17 +84,16 @@ class _FriendList extends StatelessWidget {
     child: Container(
       margin: EdgeInsets.only(left: 15.0, right: 0.0, top: 15.0),
       child: Row(
-        children: <Widget>[ _leftAvatar(), _rightContent() ],
+        children: <Widget>[ _leftAvatar(item.avatarUrl), _rightContent(item) ],
       )
     )
   );
 
-  Widget _leftAvatar() {
+  Widget _leftAvatar(avatarUrl) {
     return ClipRRect(
-      borderRadius: BorderRadius.only( topLeft: Radius.circular(4), topRight: Radius.circular(4) ),
+      borderRadius: BorderRadius.all(Radius.circular(4)),
       child: Image.network(
-        // subject['images']['large'],
-        'http://img2.woyaogexing.com/2018/12/22/f080f9c6ac884075ab7e0ddeff56b192!400x400.jpeg',
+        avatarUrl,
         width: 46.0, 
         height: 46.0,
         fit: BoxFit.cover,
@@ -102,7 +101,7 @@ class _FriendList extends StatelessWidget {
     );
   }
 
-  Widget _rightContent() {
+  Widget _rightContent(item) {
     return Expanded(
       child: Container(
         margin: EdgeInsets.only(left: 10.0),
@@ -120,24 +119,24 @@ class _FriendList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             // 左边是用户名称, 右边是时间描述
-            _rightContent_top(),
+            _rightContent_top(item.name),
             // 聊天描述
-            _rightContent_bottom(),
+            _rightContent_bottom(item.message),
           ]
         )
       )
     );
   }
 
-  Widget _rightContent_top() {
+  Widget _rightContent_top(name) {
     return Stack (
       children: <Widget>[
         Container(
           height: 25.0,
           padding: EdgeInsets.only(top: 3.0, bottom: 4.0, right: 100.0),
           child: Text(
-            // subject['title'],
-            'subjectsubjectsubjectsubjectsubjectsubjectsubjectsubjectsubjectsubject',
+            name,
+            softWrap: true,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -157,11 +156,11 @@ class _FriendList extends StatelessWidget {
     );
   }
 
-  Widget _rightContent_bottom() {
+  Widget _rightContent_bottom(message) {
     return Container(
       padding: EdgeInsets.only(right: 20.0),
       child: Text(
-        '今天的饭菜是什么今天的饭菜是什么今天的饭菜是什么今天的饭菜是什么今天的饭菜是什么',
+        message,
         style: TextStyle(fontSize: 10.0, color: Colors.grey[600]),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
