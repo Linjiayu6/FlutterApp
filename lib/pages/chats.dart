@@ -28,8 +28,6 @@ class ChatsState extends State<Chats> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      // child: Text(widget.parentsProps)
-      // child: Text('Chats Widget')
       child: Column(
         children: [
           Container(
@@ -57,7 +55,7 @@ class _FriendList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _buildBody(friendList),
+        child: _buildBody(context, friendList),
       )
     );
   }
@@ -65,22 +63,24 @@ class _FriendList extends StatelessWidget {
   /**
    * 列表循环输出内容 例子https://juejin.im/post/5b596c89e51d4519945ffb66
    */
-  _buildBody(friendList) {
+  _buildBody(context, friendList) {
     // 当没有获取到内容的时候, 菊花转
-    // if (friendList.length == 0) {
-    //   return Container(child: CupertinoActivityIndicator());
-    // }
+    if (friendList.length == 0) {
+      return Container(child: CupertinoActivityIndicator());
+    }
 
     return ListView.builder(
       itemCount: friendList.length,
       itemBuilder: (BuildContext context, int index) {
-        return getItem(friendList[index]);
+        return getItem(context, friendList[index]);
       },
     );
   }
   
-  getItem(item) => Container(
-    // margin: EdgeInsets.only(bottom: 1.0),
+  getItem(context, item) => GestureDetector(
+    onTap: () { 
+      Navigator.pushNamed(context, '/chats/detail');
+    },
     child: Container(
       margin: EdgeInsets.only(left: 15.0, right: 0.0, top: 15.0),
       child: Row(

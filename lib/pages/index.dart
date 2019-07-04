@@ -85,10 +85,6 @@ class IndexState extends State<Index> {
 
       // 这里通过currentIndex 来判断去往哪个widget
       body: Center(
-        // child: Text(_currentIndex.toString())
-        // child: Chats(
-        //   // parentsProps: _currentIndex.toString(),
-        // ),
         child: widgetList[_currentIndex] 
       )
     );
