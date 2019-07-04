@@ -20,21 +20,17 @@ class IndexState extends State<Index> {
 
   // TODO: How to optimize them?????
   final List<BottomNavigationBarItem> bottomNavigationBarList = [
-    new BottomNavigationBarItem(
-      icon: new Icon(Icons.chat,color: Colors.grey),
-      title: new Text('Chats'),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.chat,color: Colors.grey),
+      title: Text('Chats'),
     ),
-    new BottomNavigationBarItem(
-      icon: new Icon(Icons.perm_contact_calendar,color: Colors.grey),
-      title: new Text("Contacts"),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.room,color: Colors.grey),
+      title: Text("Instagram"),
     ),
-    new BottomNavigationBarItem(
-      icon: new Icon(Icons.room,color: Colors.grey),
-      title: new Text("Discover"),
-    ),
-    new BottomNavigationBarItem(
-      icon: new Icon(Icons.perm_identity,color: Colors.grey),
-      title: new Text("Me"),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.perm_identity,color: Colors.grey),
+      title: Text("Me"),
     ),
   ];
 
@@ -71,6 +67,8 @@ class IndexState extends State<Index> {
       bottomNavigationBar: BottomNavigationBar(
         // Required
         type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.green[800],
+        unselectedItemColor: Colors.grey[800],
         items: bottomNavigationBarList,
         onTap: (int index) {
           setState(() {
