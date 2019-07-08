@@ -1,20 +1,20 @@
 
-class ChatUser {
-  ChatUser({
-    this.name,
-    this.imageUrl,
-  });
-
-  final String name;
-  final String imageUrl;
-}
-
 class ChatMessage {
   ChatMessage({
     this.sender,
     this.text,
+    this.time
   });
 
-  final ChatUser sender;
+  final String sender;
   final String text;
+  final String time;
+}
+
+class RouteArguments {
+  RouteArguments(
+    this.name
+  );
+
+  final String name;
 }

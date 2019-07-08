@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'pages/index.dart';
-import 'pages/chatsMsg.dart';
+import 'pages/chatWindow.dart';
 
 void main() {
   runApp(MainApp());
@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
       ),
 
       routes: <String, WidgetBuilder> {
-        '/chats/msg': (_) => ChatsMsg(),
+        '/chats/window': (_) => ChatWindow(),
       }
     );
   }

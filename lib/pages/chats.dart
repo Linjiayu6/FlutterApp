@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../models/friendList_model.dart';
+import '../models/chat_message.dart';
 
 class Chats extends StatefulWidget {
   /**
@@ -79,12 +80,11 @@ class _FriendList extends StatelessWidget {
   
   getItem(context, item) => GestureDetector(
     onTap: () {
-      print(item.name);
       // 点击详情跳转至聊天详情页
       Navigator.pushNamed(
         context,
-        '/chats/msg',
-        arguments: { "name": item.name },
+        '/chats/window',
+        arguments: RouteArguments(item.name),
       );
     },
     child: Container(
