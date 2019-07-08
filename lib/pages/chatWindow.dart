@@ -41,7 +41,7 @@ class ChatWindowState extends State<ChatWindow> {
             reverse: true, // 从下往上显示
             itemCount: _messages.length,
             itemBuilder: (BuildContext context, int index) {
-              return _renderChatItem(context, _messages[index].text);
+              return _renderChatItem(context, _messages[index]);
             }
           )
         ),
@@ -88,7 +88,7 @@ class ChatWindowState extends State<ChatWindow> {
   }
 
 
-  Widget _renderChatItem(context, _msgItem) {
+  Widget _renderChatItem(context, chatItem) {
     return Container(
       // 文字间的间距
       margin: EdgeInsets.symmetric(vertical: 5.0),
@@ -106,12 +106,12 @@ class ChatWindowState extends State<ChatWindow> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                // Text('名字'),
+                Text(chatItem.time),
                 Container(
                   color: Colors.grey[300],
                   padding: EdgeInsets.all(6.0),
                   margin: EdgeInsets.only(top: 5.0, right: 50.0),
-                  child: Text(_msgItem),
+                  child: Text(chatItem.text),
                 )
               ]
             )
@@ -130,15 +130,24 @@ class ChatWindowState extends State<ChatWindow> {
     _controller.clear();
 
     // 将输入放到_messages里面
-    ChatMessage msgItem = new ChatMessage(
+    ChatMessage msgLeft = new ChatMessage(
+      id: 'left',
       sender: 'linjiayu',
       text: text,
-      time: '时间',
+      time: new DateTime.now().toString()
+    );
+
+    ChatMessage msgRight = new ChatMessage(
+      id: 'left',
+      sender: 'linjiayu',
+      text: '老子回复你了 别说话了',
+      time: new DateTime.now().toString()
     );
 
     // 要有setState来传递值的变化
     setState(() {
-      _messages.insert(0, msgItem);
+      _messages.insert(0, msgLeft);
+      _messages.insert(0, msgRight);
     });
   }
 }
