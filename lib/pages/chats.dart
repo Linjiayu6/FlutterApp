@@ -49,7 +49,7 @@ class ChatsState extends State<Chats> {
 class _FriendList extends StatelessWidget {
   // 无状态组件信息, 从父组件传入
   List friendList;
-  _FriendList({Key key, this.friendList}) : super(key: key);
+  _FriendList({ Key key, this.friendList }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +78,14 @@ class _FriendList extends StatelessWidget {
   }
   
   getItem(context, item) => GestureDetector(
-    onTap: () { 
-      Navigator.pushNamed(context, '/chats/detail');
+    onTap: () {
+      print(item.name);
+      // 点击详情跳转至聊天详情页
+      Navigator.pushNamed(
+        context,
+        '/chats/msg',
+        arguments: { "name": item.name },
+      );
     },
     child: Container(
       margin: EdgeInsets.only(left: 15.0, right: 0.0, top: 15.0),
