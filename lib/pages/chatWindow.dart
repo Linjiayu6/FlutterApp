@@ -2,14 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:intl/intl.dart';
-
 // Model: ChatMessage
 import '../models/chat_message.dart';
 
 class ChatWindow extends StatefulWidget {
   ChatWindow({ Key key }) : super(key: key);
-
   ChatWindowState createState () => ChatWindowState();
 }
 
@@ -28,36 +25,39 @@ class ChatWindowState extends State<ChatWindow> {
       appBar: AppBar(
         title: Text(_routerParams.name),
       ),
-
       backgroundColor: Colors.grey[300],
-
       body: _renderBody(context, _messages, _routerParams)
     );
   }
 
+  /**
+   * _renderBody
+   * 三个部分: 1. 展示信息区域 2. 分界线 3. 输入内容区域
+   */
   Widget _renderBody(context, _messages, _routerParams) {
     return Column(
       children: <Widget>[
-        // 展示区域: 用户输入的输出内容列表
+        // 1. 展示区域: 用户输入的输出内容列表
         Flexible(
           child: ListView.builder(
             padding: EdgeInsets.all(6.0),
             reverse: true, // 从下往上显示
             itemCount: _messages.length,
             itemBuilder: (BuildContext context, int index) {
-              return _renderChatItem(context, _messages[index], _routerParams);
+              return _renderChatItem(context, _messages[index]);
             }
           )
         ),
 
-        // 一个分界线
+        // 2. 一个分界线
         Divider(height: 2.0),
 
-        // 输入区域: 左边是输入框 右边是Submit
+        // 3. 输入区域: 左边是输入框 右边是Submit
         Container(
           padding: EdgeInsets.only(top: 3.0, bottom: 20.0, right: 10.0, left: 20.0),
           child: Row(
             children: <Widget>[
+              // 左边是输入框
               Flexible(
                 child: TextField(
                   controller: _controller,
@@ -71,6 +71,7 @@ class ChatWindowState extends State<ChatWindow> {
                 ),
               ),
 
+              // 右边是Submit
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 3.0),
                 child: CupertinoButton(
@@ -91,45 +92,80 @@ class ChatWindowState extends State<ChatWindow> {
     );
   }
 
-
-  Widget _renderChatItem(context, chatItem, _routerParams) {
+  Widget _renderChatItem(context, chatItem) {
     return Container(
       // 文字间的间距
       margin: EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          // 头像区域
-          Container(
-            margin: EdgeInsets.only(right: 10.0),
-            child: CircleAvatar(
-              radius: 20.0,
-              backgroundImage: NetworkImage(_routerParams.avatarUrl),
-            ),
-          ),
+        
+        // 左右两侧 会话的布局问题
+        children: chatItem.position == 'left' ? 
+          <Widget>[
+            _renderAvatar(chatItem, 'left'),
+            _renderMsg(chatItem, 'left'),
+          ] : 
+          <Widget>[
+            _renderMsg(chatItem, 'right'),
+            _renderAvatar(chatItem, 'right'),
+          ]
+      )
+    );
+  }
 
-          // 名字和用户输入内容
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  chatItem.time,
-                  style: TextStyle( fontSize: 11.0, color: Colors.grey[500] )
-                ),
-                
-                Container(
-                  color: Colors.grey[200],
-                  padding: EdgeInsets.only(top: 7.0, bottom: 7.0, left: 9.0, right: 9.0),
-                  margin: EdgeInsets.only(top: 3.0, right: 80.0),
-                  child: Text(
-                    chatItem.text,
-                    style: TextStyle( fontSize: 13.0, color: Colors.grey[900] )
-                  ),
-                )
-              ]
-            )
+  /**
+   * _renderAvatar 头像
+   */
+  Widget _renderAvatar(chatItem, direction) {
+    var crossAxisAlignment = CrossAxisAlignment.start;
+    var magin = EdgeInsets.only(right: 10.0);
+    
+    if (direction == 'right') {
+      crossAxisAlignment = CrossAxisAlignment.end;
+      magin = EdgeInsets.only(left: 10.0);
+    }
+    return Column(
+      crossAxisAlignment: crossAxisAlignment,
+      children: <Widget>[
+        Container(
+          margin: magin,
+          child: CircleAvatar(
+            radius: 20.0,
+            backgroundImage: NetworkImage(chatItem.avatarUrl),
+          ),
+        ),
+      ]
+    );
+  }
+
+  /**
+   * _renderMsg 信息展示
+   */
+  Widget _renderMsg(chatItem, direction) {
+    var crossAxisAlignment = CrossAxisAlignment.start;
+    var margin = EdgeInsets.only(top: 3.0, right: 80.0);
+    if (direction == 'right') {
+      crossAxisAlignment = CrossAxisAlignment.end;
+      margin = EdgeInsets.only(top: 3.0, left: 80.0);
+    }
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: crossAxisAlignment,
+        children: <Widget>[
+          Text(
+            // chatItem.sender,
+            chatItem.time,
+            style: TextStyle( fontSize: 11.0, color: Colors.grey[500] )
+          ),
+          
+          Container(
+            color: Colors.grey[200],
+            padding: EdgeInsets.only(top: 7.0, bottom: 7.0, left: 9.0, right: 9.0),
+            margin: margin,
+            child: Text(
+              chatItem.text,
+              style: TextStyle( fontSize: 13.0, color: Colors.grey[900] )
+            ),
           )
         ]
       )
@@ -143,26 +179,11 @@ class ChatWindowState extends State<ChatWindow> {
     }
     // 输入完后, 清空输入内容
     _controller.clear();
-    
-    // 将输入放到_messages里面
-    ChatMessage msgLeft = new ChatMessage(
-      position: 'left',
-      sender: _routerParams.name,
-      text: text,
-      time: new DateFormat("hh:mm:ss").format(new DateTime.now())
-    );
 
-    // ChatMessage msgRight = new ChatMessage(
-    //   position: 'right',
-    //   sender: 'linjiayu',
-    //   text: '老子回复你了 别说话了',
-    //   time: new DateFormat("hh:mm:ss").format(new DateTime.now())
-    // );
-
-    // 要有setState来传递值的变化
+    // 要有setState来传递值的变化, 产生会话数据: new CreateChatMessage().createSender(text)
     setState(() {
-      _messages.insert(0, msgLeft);
-      // _messages.insert(0, msgRight);
+      _messages.insert(0, new CreateChatMessage().createSender(text));
+      _messages.insert(0, new CreateChatMessage().createReceiver(_routerParams));
     });
   }
 }
