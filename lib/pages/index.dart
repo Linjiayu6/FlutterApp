@@ -52,13 +52,13 @@ class IndexState extends State<Index> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      appBar: new AppBar(
+      appBar: AppBar(
         // webview 上面标题
-        title: new Text('WeChat'),
+        title: Text('WeChat'),
         // 右边的icon
         actions: <Widget>[
-          new IconButton(
-            icon: new Icon(Icons.add_circle_outline), 
+          IconButton(
+            icon: Icon(Icons.add_circle_outline), 
             onPressed: () {
               print('Trigger icon on the right');
             },

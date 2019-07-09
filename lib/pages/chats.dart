@@ -84,7 +84,11 @@ class _FriendList extends StatelessWidget {
       Navigator.pushNamed(
         context,
         '/chats/window',
-        arguments: RouteArguments(item.name),
+        arguments: RouteArguments(
+          name: item.name,
+          avatarUrl: item.avatarUrl,
+          message: item.message,
+        ),
       );
     },
     child: Container(
