@@ -139,29 +139,34 @@ class _FriendList extends StatelessWidget {
   }
 
   Widget _rightContent_top(name) {
-    return Stack (
+    return Stack(
       children: <Widget>[
-        Container(
-          height: 25.0,
-          padding: EdgeInsets.only(top: 3.0, bottom: 4.0, right: 100.0),
-          child: Text(
-            name,
-            softWrap: true,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
+        Align(
+          alignment: new FractionalOffset(0.0, 0.0),
+          child: Container(
+            height: 25.0,
+            padding: EdgeInsets.only(top: 3.0, bottom: 4.0, right: 100.0),
+            child: Text(
+              name,
+              softWrap: true,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          )
         ),
 
-        Positioned(
-          child: Text(
-            '2019.05.25',
-            style: TextStyle(fontSize: 10.0, color: Colors.grey[600]),
-          ),
-          top: 5.0,
-          right: 20.0,
+        Align(
+          alignment: FractionalOffset.bottomRight,
+          child: Container(
+            margin: EdgeInsets.only(right: 10.0),
+            child: Text(
+              '2019.05.25',
+              textAlign: TextAlign.right,
+              style: TextStyle(fontSize: 10.0, color: Colors.grey[600]),
+            ),
+          )
         ),
-
       ],
     );
   }
