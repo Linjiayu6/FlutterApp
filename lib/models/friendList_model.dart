@@ -31,19 +31,19 @@ class FriendModel {
 }
 
 Future<List<FriendModel>> getFriendList() async {
+  List friendList = defaultFriendList;
   try {
-    Response response = await Dio().get('http://39.100.116.12:8080/flutter/chatlist');
+    final response = await Dio().get('http://39.100.116.12:8080/flutter/chatlist');
     if (response.statusCode == 200) {
-      List friendList = response.data;
+      friendList = response.data;
       return friendList.map((item) {
         return new FriendModel.fromJson(item);
       }).toList();
     }
-
-    return defaultFriendList;
   } catch (e) {
     print(e);
   }
+  return friendList;
 }
 
 /**
@@ -51,7 +51,7 @@ Future<List<FriendModel>> getFriendList() async {
  */
 List<FriendModel> defaultFriendList = [
   new FriendModel(
-    name: '美少女战士11',
+    name: '美少女战士',
     message: '《美少女战士》是1992年3月7日到1993年2月27日播放的日本动画作品',
     avatarUrl: 'http://b-ssl.duitang.com/uploads/item/201412/30/20141230001422_kRihV.thumb.1000_0.jpeg',
     time: '2019.07.04',
