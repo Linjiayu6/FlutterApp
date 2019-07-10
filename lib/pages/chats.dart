@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../widgets/friendList.dart';
+
 import '../models/friendList_model.dart';
-import '../models/chat_message.dart';
 
 class Chats extends StatefulWidget {
   /**
@@ -32,153 +33,16 @@ class ChatsState extends State<Chats> {
       child: Column(
         children: [
           Container(
-            height: 40.0,
+            height: 45.0,
             color: Colors.grey[200],
             alignment: Alignment(0.0, 0.0),
-            child: Text('Logged in to Wechat for Mac.')
+            child: Text('Logged in to Wechat for Mac.'),
           ),
           
           Expanded(
-            child: _FriendList(friendList: friendList),
+            child: FriendList_Widget(friendList: friendList),
           )
         ]
-      )
-    );
-  }
-}
-
-class _FriendList extends StatelessWidget {
-  // 无状态组件信息, 从父组件传入
-  List friendList;
-  _FriendList({ Key key, this.friendList }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _buildBody(context, friendList),
-      )
-    );
-  }
-
-  /**
-   * 列表循环输出内容 例子https://juejin.im/post/5b596c89e51d4519945ffb66
-   */
-  _buildBody(context, friendList) {
-    // 当没有获取到内容的时候, 菊花转
-    if (friendList.length == 0) {
-      return Container(child: CupertinoActivityIndicator());
-    }
-
-    return ListView.builder(
-      itemCount: friendList.length,
-      itemBuilder: (BuildContext context, int index) {
-        return getItem(context, friendList[index]);
-      },
-    );
-  }
-  
-  getItem(context, item) => GestureDetector(
-    onTap: () {
-      // 点击详情跳转至聊天详情页
-      Navigator.pushNamed(
-        context,
-        '/chats/window',
-        arguments: RouteArguments(
-          name: item.name,
-          avatarUrl: item.avatarUrl,
-          message: item.message,
-        ),
-      );
-    },
-    child: Container(
-      margin: EdgeInsets.only(left: 15.0, right: 0.0, top: 15.0),
-      child: Row(
-        children: <Widget>[ _leftAvatar(item.avatarUrl), _rightContent(item) ],
-      )
-    )
-  );
-
-  Widget _leftAvatar(avatarUrl) {
-    return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(4)),
-      child: Image.network(
-        avatarUrl,
-        width: 46.0, 
-        height: 46.0,
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  Widget _rightContent(item) {
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.only(left: 10.0),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              style: BorderStyle.solid,
-              color: Colors.grey[200],
-              width: 1.0
-            )
-          ),
-        ),
-        height: 50.0,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // 左边是用户名称, 右边是时间描述
-            _rightContent_top(item.name),
-            // 聊天描述
-            _rightContent_bottom(item.message),
-          ]
-        )
-      )
-    );
-  }
-
-  Widget _rightContent_top(name) {
-    return Stack(
-      children: <Widget>[
-        Align(
-          alignment: new FractionalOffset(0.0, 0.0),
-          child: Container(
-            height: 25.0,
-            padding: EdgeInsets.only(top: 3.0, bottom: 4.0, right: 100.0),
-            child: Text(
-              name,
-              softWrap: true,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          )
-        ),
-
-        Align(
-          alignment: FractionalOffset.bottomRight,
-          child: Container(
-            margin: EdgeInsets.only(right: 10.0),
-            child: Text(
-              '2019.05.25',
-              textAlign: TextAlign.right,
-              style: TextStyle(fontSize: 10.0, color: Colors.grey[600]),
-            ),
-          )
-        ),
-      ],
-    );
-  }
-
-  Widget _rightContent_bottom(message) {
-    return Container(
-      padding: EdgeInsets.only(right: 20.0),
-      child: Text(
-        message,
-        style: TextStyle(fontSize: 10.0, color: Colors.grey[600]),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
       )
     );
   }
