@@ -50,11 +50,11 @@ class ChatWindowState extends State<ChatWindow> {
         ),
 
         // 2. 一个分界线
-        Divider(height: 2.0),
+        Divider(height: 1.0),
 
         // 3. 输入区域: 左边是输入框 右边是Submit
         Container(
-          padding: EdgeInsets.only(top: 3.0, bottom: 20.0, right: 10.0, left: 20.0),
+          padding: EdgeInsets.only(top: 0, bottom: 3.0, right: 10.0, left: 20.0),
           child: Row(
             children: <Widget>[
               // 左边是输入框
@@ -64,7 +64,7 @@ class ChatWindowState extends State<ChatWindow> {
                   autocorrect: true, // 是否自动更正
                   maxLines: 1, // 最大行数
                   autofocus: true, // 是否自动对焦
-                  style: TextStyle(fontSize: 15.0, color: Colors.grey[800]),//输入文本的样式
+                  style: TextStyle(fontSize: 14.0, color: Colors.grey[800]),//输入文本的样式
                   decoration: InputDecoration(
                     hintText: 'Please Type ...',
                   ),
@@ -73,13 +73,13 @@ class ChatWindowState extends State<ChatWindow> {
 
               // 右边是Submit
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 3.0),
+                margin: EdgeInsets.symmetric(horizontal: 1.0),
                 child: CupertinoButton(
                   child: Text(
                     'Submit',
                     style: TextStyle(
                       color: Colors.green[800],
-                      fontSize: 16.0,
+                      fontSize: 15.0,
                     )
                   ),
                   onPressed: () => _handleSubmitted(_controller.text, _routerParams)
@@ -143,10 +143,10 @@ class ChatWindowState extends State<ChatWindow> {
    */
   Widget _renderMsg(chatItem, direction) {
     var crossAxisAlignment = CrossAxisAlignment.start;
-    var margin = EdgeInsets.only(top: 3.0, right: 80.0);
+    var margin = EdgeInsets.only(top: 5.0, right: 80.0);
     if (direction == 'right') {
       crossAxisAlignment = CrossAxisAlignment.end;
-      margin = EdgeInsets.only(top: 3.0, left: 80.0);
+      margin = EdgeInsets.only(top: 5.0, left: 80.0);
     }
     return Expanded(
       child: Column(
@@ -155,7 +155,7 @@ class ChatWindowState extends State<ChatWindow> {
           Text(
             // chatItem.sender,
             chatItem.time,
-            style: TextStyle( fontSize: 11.0, color: Colors.grey[500] )
+            style: TextStyle( fontSize: 12.0, color: Colors.grey[500] )
           ),
           
           Container(
@@ -164,7 +164,7 @@ class ChatWindowState extends State<ChatWindow> {
             margin: margin,
             child: Text(
               chatItem.text,
-              style: TextStyle( fontSize: 13.0, color: Colors.grey[900] )
+              style: TextStyle( fontSize: 14.0, color: Colors.grey[900] )
             ),
           )
         ]

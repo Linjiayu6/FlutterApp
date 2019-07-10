@@ -3,6 +3,8 @@
  * 聊天会话DS
  */
 import 'package:intl/intl.dart';
+import 'dart:math'; 
+
 class ChatMessage {
   ChatMessage({
     this.position,
@@ -34,10 +36,21 @@ class CreateChatMessage {
 
   // 接受者
   createReceiver(_routerParams) {
+    var rng = new Random().nextInt(7); 
+    List response = [
+      '对方拒绝接受消息',
+      '\u{1f644}',
+      '你开心就好  \u{1f600} ',
+      'hhhhhhhhhhh \u{1f618} \u{1f618} \u{1f618} \u{1f618} \u{1f618} \u{1f618}',
+      '老子要睡觉了, 晚安 \u{1f602}',
+      '你是个好人 \u{1f605} 你会找到更好的',
+      '\u{1f644}',
+    ];
+
     ChatMessage msgRight = new ChatMessage(
       position: 'left',
       sender: _routerParams.name,
-      text: _routerParams.name + '说: 你要说什么听不懂',
+      text: response[rng],
       time: new DateFormat("hh:mm:ss").format(new DateTime.now()),
       avatarUrl: _routerParams.avatarUrl
     );
