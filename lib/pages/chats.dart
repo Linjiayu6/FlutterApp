@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../widgets/friendList.dart';
-
 import '../models/friendList_model.dart';
 
 class Chats extends StatefulWidget {
@@ -21,12 +20,22 @@ class Chats extends StatefulWidget {
   // }) : super(key: key);
 
   Chats({ Key key}) : super(key: key);
-  
   ChatsState createState () => ChatsState();
 }
 
 class ChatsState extends State<Chats> {
-  List friendList = friendListData;
+  List friendList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getFriendList().then((data) => {
+      setState(() {
+        friendList = data;
+      })
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Center(
