@@ -1,6 +1,7 @@
-# flutter_app
+# Flutter Project
 
-A new Flutter project.
+<img src='173835449.gif' width="300px" />
+
 
 ## Getting Started
 
