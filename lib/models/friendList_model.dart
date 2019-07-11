@@ -23,6 +23,10 @@ class FriendModel {
     this.time
   });
 
+  // 构造函数 { name, message, avatarUrl, time }
+  // 用来简单地反序列化你的 json
+  // 序列化 简单来讲就是把数据（可能在对象中）写成字符串，反序列化 正好相反
+  // 它获取原始数据并重建对象模型。
   FriendModel.fromJson(Map<String, dynamic> json) 
   : name = json['name'],
     avatarUrl =json['avatarUrl'],
