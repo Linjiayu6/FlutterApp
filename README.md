@@ -1,8 +1,5 @@
 # Flutter Project
 
-<img src='173835449.gif' width="300px" />
-
-
 ## Getting Started
 
 This project is a starting point for a Flutter application.
